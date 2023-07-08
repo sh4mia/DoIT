@@ -1,0 +1,123 @@
+{% extends 'base/main.html' %} {% block content %} {% load static %}
+<meta http-equiv="refresh" content="60" />
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<div class="header-bar">
+	<div style="text-align: center; align-items: center">
+		<h3 style="margin: 0; font-size: 32px">{{request.user|title}}</h3>
+		<h4 style="margin: 0; font-size: 16px">
+			Total {{count_sum}} task{{ count_sum|pluralize:"s:" }}
+		</h4>
+		<h4 style="margin: 0; font-size: 16px">
+			&#10004; {{count1}} | &#10006; {{count}}
+		</h4>
+		{% if request.user.is_authenticated %}
+		<div style="justify-content: space-between">
+			<a id="add-link" href="{% url 'profile' %}"
+				><span class="material-symbols-outlined">account_circle</span></a
+			>
+			<a id="add-link" href="{% url 'logout' %}"
+				><span class="material-symbols-outlined">logout</span></a
+			>
+		</div>
+		<div id="search-add-wrapper">
+			<form method="GET" style="display: flex">
+				<input
+					type="text"
+					name="search-area"
+					placeholder="Search your task"
+					value="{{search_input}}"
+				/>
+				<button class="button1" type="submit">
+					<span class="material-symbols-outlined">search</span>
+				</button>
+			</form>
+			{% if tasks|length > 0 %}
+			<a id="add-link" href="{% url 'task-create' %}">&#x2b;</a>
+			{% endif %}
+		</div>
+		{% else %}
+		<a href="{% url 'login' %}">Login</a> {% endif %}
+	</div>
+</div>
+
+<form
+	style="display: none"
+	id="reorderForm"
+	method="post"
+	action="{% url 'task-reorder' %}"
+>
+	{% csrf_token %}
+	<input type="hidden" id="positionInput" name="position" />
+</form>
+
+<div id="tasklist" class="task-items-wrapper">
+	{% for task in tasks %}
+	<div class="task-wrapper" data-position="{{task.pk}}">
+		<div class="task-title">
+			{% if task.complete %}
+			<div class="task-complete-icon">
+				<span class="material-symbols-outlined">check_circle</span>
+			</div>
+			<s><a href="{% url 'task-update' task.id %}">{{task}}</a></s> {% else %}
+			<div class="task-incomplete-icon">
+				<span class="material-symbols-outlined">circle</span>
+			</div>
+			<a href="{% url 'task-update' task.id %}"
+				>{{task}}<br /><span style="float: left" class="timer"
+					>{{ task.due|timeuntil }} left</span
+				></a
+			>
+			{% endif %}
+		</div>
+		<div class="task-controls">
+			<a class="delete-link" href="{% url 'task-delete' task.id %}"
+				><span class="material-symbols-outlined">delete</span></a
+			>
+			<span class="handle"
+				><span class="material-symbols-outlined">toc</span></span
+			>
+		</div>
+	</div>
+
+	{% empty %}
+	<div style="text-align: center; padding-bottom: 10px; line-height: 1em">
+		<h3>No new tasks are created.</h3>
+		<h3>
+			Create a
+			<a
+				style="text-decoration: none; color: #3e1d91"
+				href="{% url 'task-create' %}"
+				>New task</a
+			>
+			!
+		</h3>
+	</div>
+	{% endfor %}
+</div>
+
+<script>
+	var taskList = document.getElementById("tasklist");
+	var reorderForm = document.getElementById("reorderForm");
+	var positionInput = document.getElementById("positionInput");
+
+	let sortable = Sortable.create(taskList, {
+		handle: ".handle",
+		ghostClass: "dropArea",
+		chosenClass: "selectedTask",
+	});
+
+	function reordering() {
+		const rows = document.getElementsByClassName("task-wrapper");
+		let pos = [];
+		for (let row of rows) {
+			pos.push(row.dataset.position);
+		}
+		console.log(pos.join(","));
+		positionInput.value = pos.join(",");
+		reorderForm.submit();
+	}
+
+	document.ondrop = reordering;
+</script>
+
+{% endblock content %}

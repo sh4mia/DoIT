@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="description"
+			content="DoIT - task list app developed by shamia"
+		/>
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>DoIT | Task List</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			id="theme"
+			rel="stylesheet"
+			type="text/css"
+			href="{% static 'light.css' %}"
+		/>
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="icon" href="{% static 'images/weblogodoit.png' %}" />
+	</head>
+
+	<body>
+		<div class="container">
+			{% block content %} {% endblock content %}
+			<div class="footer">
+				<div style="text-align: center; justify-content: center">
+					<h5>
+						<a id="myButton" href=""
+							><span class="material-symbols-outlined">dark_mode</span></a
+						>
+					</h5>
+					<h5>
+						DoIT |
+						<a href="https://github.com/sh4mia" target="_blank">sh4mia</a>
+					</h5>
+				</div>
+			</div>
+			<script src="{% static 'theme.js' %}"></script>
+		</div>
+	</body>
+</html>
