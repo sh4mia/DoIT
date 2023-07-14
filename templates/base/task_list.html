@@ -81,16 +81,11 @@
 
 	{% empty %}
 	<div style="text-align: center; padding-bottom: 10px; line-height: 1em">
-		<h3>No new tasks are created.</h3>
-		<h3>
+		<p>No new tasks are created.</p>
+		<p>
 			Create a
-			<a
-				style="text-decoration: none; color: #3e1d91"
-				href="{% url 'task-create' %}"
-				>New task</a
-			>
-			!
-		</h3>
+			<a style="text-decoration: none; " href="{% url 'task-create' %}">New task</a>!
+		</p>
 	</div>
 	{% endfor %}
 </div>
