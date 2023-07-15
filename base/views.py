@@ -7,13 +7,12 @@ from django.urls import reverse_lazy
 
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
 from django.views import View
 from django.db import transaction
 from .models import Task
-from .forms import PositionForm, TaskForm
+from .forms import PositionForm, TaskForm, CustomUserForm
 
 
 class CustomLoginView(LoginView):
@@ -26,7 +25,7 @@ class CustomLoginView(LoginView):
     
 class RegisterPage(FormView):
     template_name = 'base/register.html'
-    form_class = UserCreationForm
+    form_class = CustomUserForm
     redirect_authenticated_user = True
     success_url = reverse_lazy('tasks')
 
