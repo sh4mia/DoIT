@@ -12,11 +12,12 @@ from django.contrib.auth import login
 from django.views import View
 from django.db import transaction
 from .models import Task
-from .forms import PositionForm, TaskForm, CustomUserForm
+from .forms import PositionForm, TaskForm, CustomUserForm, LoginForm
 
 
 class CustomLoginView(LoginView):
     template_name = 'base/login.html'
+    form_class = LoginForm
     fields = '__all__'
     redirect_authenticated_user = True
 

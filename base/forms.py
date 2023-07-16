@@ -3,14 +3,33 @@ from .models import Task
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 # Reordering Form and View
+from django.contrib.auth.forms import AuthenticationForm
 
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(
+        label='Login:',
+        widget=forms.TextInput(
+            attrs = {
+                'placeholder': 'Username',
+            }
+        )
+    )
+
+    password = forms.CharField(
+        label='Password:', 
+        widget=forms.PasswordInput(
+            attrs = {
+                'placeholder': 'Password'
+            }
+        )
+    )
 
 class CustomUserForm(forms.Form):
 
-    username = forms.CharField(max_length=255, label= 'Username:')
-    email = forms.EmailField(max_length=255, label= 'E-mail:')
-    password1 = forms.CharField(max_length=128, widget=forms.PasswordInput, label= 'Password:')
-    password2 = forms.CharField(max_length=128, widget=forms.PasswordInput, label= 'Repeat Password:')
+    username = forms.CharField(max_length=255, widget=forms.TextInput(attrs= {'placeholder' : 'Username'}), label= 'Username:')
+    email = forms.EmailField(max_length=255, widget=forms.TextInput(attrs= {'placeholder' : 'E-mail'}), label= 'E-mail:')
+    password1 = forms.CharField(max_length=128, widget=forms.PasswordInput(attrs= {'placeholder' : 'Password'}), label= 'Password:')
+    password2 = forms.CharField(max_length=128, widget=forms.PasswordInput(attrs= {'placeholder' : 'Repeat password'}), label= 'Repeat Password:')
 
     def clean_email(self):
         email = self.cleaned_data['email']
