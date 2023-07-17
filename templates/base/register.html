@@ -19,12 +19,17 @@
 
         <label>{{form.password2.label}}</label>
         {{form.password2}}
-
-        {% for field in form %}
-		{% if field.errors %}
-			<span class="error">{{ field.errors }}</span>
-		{% endif %}
-		{% endfor %}
+        {% if form.errors %}
+            <div style="items-align: left; background-color: #f44336; color: white; font-size: 12px; margin: 15px; border-radius: 5px 5px; border: 1px solid #000000;">
+                <strong>
+                {% for field in form %}
+                    {% if field.errors %}
+                        <span class="error">{{ field.errors.as_text }}</span><br>
+                    {% endif %}
+                {% endfor %}
+                </strong>
+            </div>
+        {% endif %}
         <input style="margin-top:10px ;" class="button" type="submit" value="Register">
     </form>
     <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>

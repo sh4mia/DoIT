@@ -18,9 +18,11 @@ from .forms import PositionForm, TaskForm, CustomUserForm, LoginForm
 class CustomLoginView(LoginView):
     template_name = 'base/login.html'
     form_class = LoginForm
-    fields = '__all__'
     redirect_authenticated_user = True
 
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form, login_failed=True))
+    
     def get_success_url(self):
         return reverse_lazy('tasks')
     

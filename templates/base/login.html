@@ -6,13 +6,19 @@
 
 <div class="card-body">
 	<form method="POST">
-		{% csrf_token %} {{form.as_p}}
-		{% for field in form %}
-		{% if field.errors %}
-			<span class="error">{{ field.errors }}</span>
-		{% endif %}
-		{% endfor %}
-		<input class="button" type="submit" value="Login" />
+		{% csrf_token %} 
+		<label>{{form.username.label}}</label>
+        {{form.username}}
+		<label>{{form.password.label}}</label>
+        {{form.password}}
+		{% if login_failed %}
+            <div style="items-align: left; background-color: #f44336; color: white; font-size: 12px; margin: 15px; border-radius: 5px 5px; border: 1px solid #000000;">
+                <strong>
+                    *Wrong username or password
+                </strong>
+            </div>
+        {% endif %}
+		<input style="margin-top:10px ;" class="button" type="submit" value="Login" />
 	</form>
 	<p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
 </div>
