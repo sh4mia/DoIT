@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import UserProfile
 from .forms import UserUpdateForm
+from django.contrib import messages
 # Create your views here.
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
@@ -13,6 +14,10 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Profile updated succesfully.')
+        return super().form_valid(form)
     
     def get_success_url(self):
         return reverse_lazy('tasks')
