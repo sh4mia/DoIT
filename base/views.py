@@ -14,7 +14,7 @@ from django.db import transaction
 from .models import Task
 from .forms import PositionForm, TaskForm, CustomUserForm, LoginForm
 
-from django.contrib import messages
+import sweetify
 
 
 class CustomLoginView(LoginView):
@@ -29,7 +29,7 @@ class CustomLoginView(LoginView):
         user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
         if user is not None:
             login(self.request, user)
-            messages.success(self.request, 'Login successful.')
+            sweetify.success(self.request, 'Login successful.')
         return super().form_valid(form)
     
     def get_success_url(self):
@@ -45,7 +45,7 @@ class RegisterPage(FormView):
         user = form.save()
         if user is not None:
             login(self.request, user)
-            messages.success(self.request, 'Registered successfully.')
+            sweetify.success(self.request, 'Registered successfully.')
         return super(RegisterPage, self).form_valid(form)
 
     def get(self, *args, **kwargs):
@@ -82,7 +82,7 @@ class TaskCreate(LoginRequiredMixin, CreateView):
     template_name = 'base/task_form.html'
     def form_valid(self, form):
         form.instance.user = self.request.user
-        messages.success(self.request, 'Task created succesfully.')
+        sweetify.success(self.request, 'Task created succesfully.')
         return super(TaskCreate, self).form_valid(form)
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
@@ -91,7 +91,7 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'base/task_form.html'
     success_url = reverse_lazy('tasks')
     def form_valid(self, form):
-        messages.success(self.request, 'Task updated successfully.')
+        sweetify.success(self.request, 'Task updated successfully.')
         return super().form_valid(form)
 
 class DeleteView(LoginRequiredMixin, DeleteView):
@@ -102,7 +102,7 @@ class DeleteView(LoginRequiredMixin, DeleteView):
         owner = self.request.user
         return self.model.objects.filter(user=owner)
     def form_valid(self, form):
-        messages.success(self.request, 'Task deleted successfully.')
+        sweetify.success(self.request, 'Task deleted successfully.')
         return super().form_valid(form)
 
 class TaskReorder(View):

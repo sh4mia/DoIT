@@ -40,8 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'base.apps.BaseConfig',
-    'friend_system.apps.FriendSystemConfig'
+    'friend_system.apps.FriendSystemConfig',
+    'sweetify',
 ]
+
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
