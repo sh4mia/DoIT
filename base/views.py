@@ -23,6 +23,7 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user = True
 
     def form_invalid(self, form):
+        sweetify.error(self.request, 'Something went wrong.')
         return self.render_to_response(self.get_context_data(form=form, login_failed=True))
     
     def form_valid(self, form):
@@ -47,6 +48,10 @@ class RegisterPage(FormView):
             login(self.request, user)
             sweetify.success(self.request, 'Registered successfully.')
         return super(RegisterPage, self).form_valid(form)
+    
+    def form_invalid(self, form):
+        sweetify.error(self.request, 'Something went wrong.')
+        return self.render_to_response(self.get_context_data(form=form))
 
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
