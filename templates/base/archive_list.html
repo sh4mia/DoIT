@@ -2,26 +2,9 @@
 <meta http-equiv="refresh" content="60" />
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <div class="header-bar">
-	<div style="text-align: center; align-items: center">
-		<h3 style="margin: 0; font-size: 32px">{{request.user|title}}</h3>
-		<h4 style="margin: 0; font-size: 16px">
-			Total {{count_sum}} task{{ count_sum|pluralize:"s:" }}
-		</h4>
-		<h4 style="margin: 0; font-size: 16px">
-			&#10004; {{count1}} | &#10006; {{count}}
-		</h4>
-		{% if request.user.is_authenticated %}
-		<div style="justify-content: space-between">
-			<a id="add-link" href="{% url 'profile' %}"
-				><span class="material-symbols-outlined">account_circle</span></a
-			>
-			<a id="add-link" href="{% url 'archive' %}"
-				><span class="material-symbols-outlined">inventory</span></a
-			>
-			<a id="add-link" href="{% url 'logout' %}"
-				><span class="material-symbols-outlined">logout</span></a
-			>
-		</div>
+    <div style="text-align: center; align-items: center">
+        <a href="{% url 'tasks' %}">&#8592; Back</a>
+		<h3 style="margin: 0; font-size: 32px">Archived Tasks</h3>
 		<div id="search-add-wrapper">
 			<form method="GET" style="display: flex">
 				<input
@@ -33,13 +16,7 @@
 				<button class="button1" type="submit">
 					<span class="material-symbols-outlined">search</span>
 				</button>
-			</form>
-			{% if tasks|length > 0 %}
-			<a id="add-link" href="{% url 'task-create' %}">&#x2b;</a>
-			{% endif %}
-		</div>
-		{% else %}
-		<a href="{% url 'login' %}">Login</a> {% endif %}
+			</form></div>
 	</div>
 </div>
 
@@ -54,10 +31,10 @@
 </form>
 
 <div id="tasklist" class="task-items-wrapper">
-	{% for task in tasks %}
+	{% for task in archived_tasks %}
 	<div class="task-wrapper" data-position="{{task.pk}}">
 		<div class="task-title">
-			{% if task.complete %}
+			{% if archived_tasks %}
 			<div class="task-complete-icon">
 				<span class="material-symbols-outlined">check_circle</span>
 			</div>
@@ -84,11 +61,7 @@
 
 	{% empty %}
 	<div style="text-align: center; padding-bottom: 10px; line-height: 1em">
-		<p>No new tasks are created.</p>
-		<p>
-			Create a
-			<a style="text-decoration: none; " href="{% url 'task-create' %}">New task</a>!
-		</p>
+		<p>No archived tasks.</p>
 	</div>
 	{% endfor %}
 </div>

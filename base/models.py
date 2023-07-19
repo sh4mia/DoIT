@@ -7,6 +7,7 @@ class Task(models.Model):
     title = models.CharField(max_length=30)
     description = models.TextField(null=True, blank=True)
     complete = models.BooleanField(default=False)
+    archived = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     due = models.DateTimeField(auto_now_add=False, auto_now=False, blank=True, null=True)
 

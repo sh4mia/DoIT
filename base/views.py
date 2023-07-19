@@ -62,11 +62,19 @@ class TaskList(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'tasks'
 
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user, archived=False)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['count'] = context['tasks'].filter(complete=False).count()
-        context['count1'] = context['tasks'].filter(complete=True).count()
+        archive_list = ArchiveList()
+        archive_list.request = self.request  
+        archived_tasks = archive_list.get_queryset().filter(user=self.request.user)
+        context['archived_tasks'] = archived_tasks
+        
+        context['count1'] = archived_tasks.filter(complete=True).count()
         context['count_sum'] = context['count'] + context['count1']
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
@@ -76,6 +84,23 @@ class TaskList(LoginRequiredMixin, ListView):
 
         return context
 
+class ArchiveList(LoginRequiredMixin, ListView):
+    model = Task
+    context_object_name = 'archived_tasks'
+    template_name = 'base/archive_list.html'
+
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user, archived=True)
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            context['archived_tasks'] = context['archived_tasks'].filter(title__startswith=search_input)
+
+        context['search_input'] = search_input
+
+        return context
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
     context_object_name = 'task'
@@ -95,7 +120,10 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
     form_class = TaskForm
     template_name = 'base/task_form.html'
     success_url = reverse_lazy('tasks')
+
     def form_valid(self, form):
+        if form.instance.complete:
+            form.instance.archived = True
         sweetify.success(self.request, 'Task updated successfully.')
         return super().form_valid(form)
 
