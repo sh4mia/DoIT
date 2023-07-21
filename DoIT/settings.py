@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'friend_system.apps.FriendSystemConfig',
     'sweetify',
+    'captcha',
 ]
 
 SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'

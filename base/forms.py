@@ -1,10 +1,9 @@
 from django import forms
 from .models import Task
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-# Reordering Form and View
+from captcha.fields import CaptchaField
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import authenticate
+
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
@@ -24,7 +23,7 @@ class LoginForm(AuthenticationForm):
             }
         )
     )
-
+    captcha = CaptchaField(label='Captcha:')
 
 class CustomUserForm(forms.Form):
 
@@ -32,6 +31,7 @@ class CustomUserForm(forms.Form):
     email = forms.EmailField(max_length=255, widget=forms.TextInput(attrs= {'placeholder' : 'E-mail'}), label= 'E-mail:')
     password1 = forms.CharField(max_length=128, widget=forms.PasswordInput(attrs= {'placeholder' : 'Password'}), label= 'Password:')
     password2 = forms.CharField(max_length=128, widget=forms.PasswordInput(attrs= {'placeholder' : 'Repeat password'}), label= 'Repeat Password:')
+    captcha = CaptchaField(label='Captcha:')
 
     def clean_email(self):
         email = self.cleaned_data['email']
