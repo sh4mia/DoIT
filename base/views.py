@@ -112,6 +112,8 @@ class TaskCreate(LoginRequiredMixin, CreateView):
     template_name = 'base/task_form.html'
     def form_valid(self, form):
         form.instance.user = self.request.user
+        if form.instance.complete:
+            form.instance.archived = True
         sweetify.success(self.request, 'Task created succesfully.')
         return super(TaskCreate, self).form_valid(form)
 
