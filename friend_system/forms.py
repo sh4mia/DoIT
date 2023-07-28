@@ -1,11 +1,18 @@
 from django import forms
 from .models import UserProfile
+from django.contrib.auth.models import User
 
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField(widget=forms.EmailInput, label='E-mail:', required=True)
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name']
+
+class ProfileUpdateForm(forms.ModelForm):
     avatar = forms.ImageField(required=False)
     class Meta:
         model = UserProfile
-        fields = ['email', 'first_name', 'last_name', 'avatar']
+        fields = ['avatar']
+    avatar = forms.ImageField(widget=forms.ClearableFileInput(attrs={'accept': 'image/*'}),help_text='Acceptable formats: png, jpg, jpeg.')
