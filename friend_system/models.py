@@ -4,7 +4,7 @@ from PIL import Image
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(default="default.jpg", null=True, blank=True)
+    avatar = models.ImageField(default="default.png", null=True, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -14,5 +14,5 @@ class UserProfile(models.Model):
 
         if self.avatar:
             img = Image.open(self.avatar.path)
-            img.thumbnail((250, 250))
+            img.thumbnail((500, 500))
             img.save(self.avatar.path)
