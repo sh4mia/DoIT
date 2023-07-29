@@ -2,13 +2,27 @@
 {% block content %}
 
 <div class="header-bar">
-    <a href="{% url 'tasks' %}">&#8592; Back</a>
+    <a style="justify-content: left;" href="{% url 'tasks' %}">&#8592; Back</a>
+    <div style="text-align: center; align-items: center">
+        <div class="avatar">
+            <img class="profile-pic" src="{{request.user.userprofile.avatar.url}}">
+        </div>
+        <div>
+            <h3 style="margin: 0; font-size: 16px">{{request.user}}</h3>
+            
+            <h3 style="margin: 0; font-size: 16px">{{request.user.email}}</h3>
+        </div>
+    </div>
 </div>
 
 <div class="card-body">
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.as_p}}
+        {{profile_form.avatar.label}}
+        <div style="opacity:1; font-size: 0px; margin-top: -10px; width: 200px;">
+            {{profile_form.as_p}}
+        </div>
         <input class="button" type="submit" value="Submit">
     </form>
 </div>

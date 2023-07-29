@@ -15,4 +15,4 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['avatar']
-    avatar = forms.ImageField(widget=forms.ClearableFileInput(attrs={'accept': 'image/*'}),help_text='Acceptable File format: PNG only')
+    avatar = forms.ImageField(label='Avatar:',widget=forms.ClearableFileInput(attrs={'accept': 'image/png'}),help_text='Acceptable File format: PNG only')
