@@ -195,6 +195,7 @@ input {
 input[type="text"],
 input[type="password"],
 input[type="email"],
+input[type="file"],
 input,
 textarea {
 	border: 1px solid #757575;
@@ -208,6 +209,11 @@ label {
 	padding-top: 10px !important;
 	display: block;
 }
+
+.helptext {
+	font-size: 14px;
+}
+
 
 ::placeholder {
 	font-weight: 300;
@@ -273,6 +279,13 @@ label {
 .timer {
 	font-size: 10px;
 	animation: blinker 3s linear infinite;
+}
+
+.avatar img.profile-pic {
+	/* vertical-align: middle; */
+  	width: 125px;
+  	height: 125px;
+	border-radius: 50%;
 }
 
 @keyframes blinker {
