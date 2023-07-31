@@ -1,0 +1,20 @@
+{% extends 'base/main.html' %}
+{% block content %}
+
+<div class="header-bar">
+    <div style="text-align: center; align-items: center">
+    <a style="vertical-align: top; text-align:left;" href="{% url 'tasks' %}">&#8592; Back</a><br>
+        <div class="avatar">
+            <img class="profile-pic" src="{{profile.avatar.url}}">
+        </div>
+        <div>
+            <h3 style="margin: 0; font-size: 14px"><label>Username:</label> <i>{{ profile.user.username }}</i></h3>
+            
+            <h3 style="margin: 0; font-size: 14px"><label>E-Mail:</label> <i>{{ profile.user.email }}</i></h3>
+
+            <h3 style="margin: 0; font-size: 14px"><label>Full Name:</label> <i>{{profile.user.first_name}} {{profile.user.last_name}}</i></h3>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

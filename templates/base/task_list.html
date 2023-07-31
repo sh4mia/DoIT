@@ -12,7 +12,7 @@
 		</h4>
 		{% if request.user.is_authenticated %}
 		<div style="justify-content: space-between">
-			<a id="add-link" href="{% url 'profile' %}"
+			<a id="add-link" href="{% url 'profile-detail' username=user.username %}"
 				><span class="material-symbols-outlined">account_circle</span></a
 			>
 			<a id="add-link" href="{% url 'archive' %}"

@@ -1,4 +1,5 @@
 from django.views.generic.edit import UpdateView
+from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -43,3 +44,13 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return self.success_url
+    
+
+class ProfileDetailView(LoginRequiredMixin, DetailView):
+    model = UserProfile
+    template_name = 'base/profile_detail.html'
+    context_object_name = 'profile'
+
+    def get_object(self, queryset=None):
+        username = self.kwargs.get('username')
+        return UserProfile.objects.get(user__username=username)
