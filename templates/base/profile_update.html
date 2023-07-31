@@ -3,7 +3,7 @@
 
 <div class="header-bar">
     <div style="text-align: center; align-items: center">
-    <a style="vertical-align: top; text-align:left;" href="{% url 'tasks' %}">&#8592; Back</a><br>
+    <a style="vertical-align: top; text-align:left;" href="{% url 'profile-detail' username=user.username %}">&#8592; Back</a><br>
         <div class="avatar">
             <img class="profile-pic" src="{{request.user.userprofile.avatar.url}}">
         </div>

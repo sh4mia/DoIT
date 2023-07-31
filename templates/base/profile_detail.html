@@ -3,6 +3,9 @@
 
 <div class="header-bar">
     <div style="text-align: center; align-items: center">
+        {% if user.is_authenticated and user.id == profile.user.id %}
+        <a href="{% url 'profile-update' %}" class="btn btn-primary">Edit Profile</a>
+        {% endif %}
     <a style="vertical-align: top; text-align:left;" href="{% url 'tasks' %}">&#8592; Back</a><br>
         <div class="avatar">
             <img class="profile-pic" src="{{profile.avatar.url}}">
