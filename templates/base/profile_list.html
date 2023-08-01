@@ -1,0 +1,38 @@
+{% extends 'base/main.html' %} {% block content %}
+<div class="header-bar">
+    <div style="text-align: center; align-items: center">
+    <a style="vertical-align: top; text-align:left;" href="{% url 'profile-detail' username=user.username %}">&#8592; Back</a><br>
+    <div id="search-add-wrapper">
+        <form method="GET" style="display: flex">
+            <input
+                type="text"
+                name="search-area"
+                placeholder="Search profiles"
+                value="{{search_input}}"
+            />
+            <button class="button1" type="submit">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+        </form>
+    </div>
+</div>
+</div>
+
+<div id="tasklist" class="task-items-wrapper">
+    {% for profile in profiles %}
+    <div class="task-wrapper">
+        <div style="display:flex;align-items:center;">
+            <div class="avatar" style="margin:5px;">
+                <img style="height:50px;width:50px;" class="profile-pic" src="{{ profile.avatar.url }}">
+            </div>
+            <div class="username">
+                <a href="{% url 'profile-detail' username=profile.user.username %}">
+                    {{ profile.user.username }}
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}

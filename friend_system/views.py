@@ -1,5 +1,6 @@
 from django.views.generic.edit import UpdateView
 from django.views.generic.detail import DetailView
+from django.views.generic import ListView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -54,3 +55,15 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
     def get_object(self, queryset=None):
         username = self.kwargs.get('username')
         return UserProfile.objects.get(user__username=username)
+    
+
+class ProfileListView(LoginRequiredMixin, ListView):
+    model = UserProfile
+    template_name = 'base/profile_list.html'
+    context_object_name = 'profiles'
+    
+    def get_queryset(self):
+        search_query = self.request.GET.get('search-area')
+        if search_query:
+            return self.model.objects.filter(user__username__icontains=search_query)
+        return self.model.objects.none()

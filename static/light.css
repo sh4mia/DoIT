@@ -288,6 +288,11 @@ label {
 	border-radius: 50%;
 }
 
+.profile-info {
+    display: flex;
+    align-items: center;
+}
+
 @keyframes blinker {
 	0% {
 		color: red;
