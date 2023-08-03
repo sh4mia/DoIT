@@ -58,6 +58,25 @@ class RegisterPage(FormView):
         if self.request.user.is_authenticated:
             return redirect('tasks')
         return super(RegisterPage, self).get(*args, **kwargs)
+
+from datetime import timedelta
+from django.utils import timezone
+
+def update_user_profile_points(user):
+    user_profile = user.userprofile
+    user_profile.points += 3  
+    last_completed_task = Task.objects.filter(user=user, complete=True).latest('created')
+    last_task_completed_at = last_completed_task.created if last_completed_task else None
+    if timezone.now() - last_task_completed_at <= timedelta(days=1):
+        user_profile.streak += 1
+        if user_profile.streak >= 5:
+            user_profile.points += 15
+        elif user_profile.streak >= 2:
+            user_profile.points += 5
+    else:
+        user_profile.streak = 1
+
+    user_profile.save()
     
 class TaskList(LoginRequiredMixin, ListView):
     model = Task
@@ -115,6 +134,7 @@ class TaskCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         if form.instance.complete:
             form.instance.archived = True
+            update_user_profile_points(self.request.user)
         sweetify.success(self.request, 'Task created succesfully.')
         return super(TaskCreate, self).form_valid(form)
 
@@ -127,6 +147,7 @@ class TaskUpdate(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         if form.instance.complete:
             form.instance.archived = True
+            update_user_profile_points(self.request.user)
         sweetify.success(self.request, 'Task updated successfully.')
         return super().form_valid(form)
 
