@@ -20,13 +20,13 @@ class UserProfile(models.Model):
             img.save(self.avatar.path)
 
     def level(self):
-        if self.points >= 50:
+        if self.points >= 750:
             return 5
-        elif self.points >= 20:
+        elif self.points >= 250:
             return 4
-        elif self.points >= 10:
+        elif self.points >= 100:
             return 3
-        elif self.points >= 5:
+        elif self.points >= 50:
             return 2
         else:
             return 1
