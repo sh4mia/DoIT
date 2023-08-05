@@ -64,10 +64,16 @@ from django.utils import timezone
 
 def update_user_profile_points(user):
     user_profile = user.userprofile
-    user_profile.points += 3  
     last_completed_task = Task.objects.filter(user=user, complete=True).latest('created')
     last_task_completed_at = last_completed_task.created if last_completed_task else None
-    if timezone.now() - last_task_completed_at <= timedelta(days=1):
+
+    if last_task_completed_at:
+        time_since_last_task = timezone.now() - last_task_completed_at
+        if time_since_last_task < timedelta(minutes=30):
+            return
+
+    user_profile.points += 3  
+    if last_task_completed_at and timezone.now() - last_task_completed_at <= timedelta(days=1):
         user_profile.streak += 1
         if user_profile.streak >= 5:
             user_profile.points += 15
