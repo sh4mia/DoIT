@@ -19,20 +19,25 @@
 </div>
 
 <div id="tasklist" class="task-items-wrapper">
-    {% for profile in profiles %}
-    <div class="task-wrapper">
-        <div style="display:flex;align-items:center;">
-            <div class="avatar" style="margin:5px;">
-                <img style="height:50px;width:50px;" class="profile-pic" src="{{ profile.avatar.url }}">
-            </div>
-            <div class="username">
-                <a href="{% url 'profile-detail' username=profile.user.username %}">
-                    {{ profile.user.username }}
-                </a>
+    {% if profiles %}
+    <p style="text-align:center;">Found {{ profiles|length }} results:</p>
+        {% for profile in profiles %}
+        <div class="task-wrapper">
+            <div style="display:flex;align-items:center;">
+                <div class="avatar" style="margin:5px;">
+                    <img style="height:50px;width:50px;" class="profile-pic" src="{{ profile.avatar.url }}">
+                </div>
+                <div class="username">
+                    <a href="{% url 'profile-detail' username=profile.user.username %}">
+                        {{ profile.user.username }}
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-    {% endfor %}
-    </div>
+        {% endfor %}
+    {% else %}
+        <p style="text-align:center;">No results.</p>
+    {% endif %}
+</div>
 
 {% endblock %}
