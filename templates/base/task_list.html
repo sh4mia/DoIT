@@ -70,8 +70,11 @@
 					>{{ task.due|timeuntil }} left</span
 				></a
 			>
+			
 			{% endif %}
 		</div>
+		<span style="background-color: {% if task.priority == 'low' %}#9ACD32{% elif task.priority == 'medium' %}#F4A460{% else %}#FF6347{% endif %}; display: inline-block; height:20px; width:20px; border-radius:10px;"></span>
+
 		<div class="task-controls">
 			<a class="delete-link" href="{% url 'task-delete' task.id %}"
 				><span class="material-symbols-outlined">delete</span></a
