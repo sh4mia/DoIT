@@ -19,14 +19,15 @@ class UserProfile(models.Model):
             img.thumbnail((500, 500))
             img.save(self.avatar.path)
 
-    def level(self):
+    def get_rank_name(self):
         if self.points >= 750:
-            return 5
+            return "Master"
         elif self.points >= 250:
-            return 4
+            return "Expert"
         elif self.points >= 100:
-            return 3
+            return "Intermediate"
         elif self.points >= 50:
-            return 2
+            return "Beginner"
         else:
-            return 1
+            return "Newbie"
+        

@@ -23,8 +23,23 @@
             <h4 style="margin: 0; font-size: 14px">
                 &#10004; {{ completed_tasks_count }}
             </h4>
-            <h2>Level {{ profile.level }}</h2>
-            <p>Points: {{ profile.points }}</p>
+            <h3 style="margin: 0; font-size: 14px"><label>Rank:</label><i>{{ profile.get_rank_name }}</i></h3>
+            
+            <p style="margin: 0; scale:70%;">
+                {% if profile.get_rank_name == "Beginner" %}
+                    <span class="material-symbols-outlined">starsstars</span>
+                {% elif profile.get_rank_name == "Intermediate" %}
+                    <span class="material-symbols-outlined">starsstarsstars</span>
+                {% elif profile.get_rank_name == "Expert" %}
+                    <span class="material-symbols-outlined">starsstarsstarsstars</span>
+                {% elif profile.get_rank_name == "Master" %}
+                    <span class="material-symbols-outlined">starsstarsstarsstarsstars</span>
+                {% else %}
+                    <!-- Default case -->
+                    <span class="material-symbols-outlined">stars</span>
+                {% endif %}
+            </p>
+            <p style="margin: 0; font-size: 14px">Points: {{ profile.points }}</p>
         </div>
     </div>
 </div>
