@@ -34,6 +34,15 @@
 					<span class="material-symbols-outlined">search</span>
 				</button>
 			</form>
+			<form method="get">
+				<label for="sort_by">Sort by:</label>
+				<select name="sort_by" id="sort_by">
+					<option value="priority">Priority</option>
+					<option value="title">Title</option>
+					<option value="due">Due</option>
+				</select>
+				<button type="submit">Sort</button>
+			</form>
 			{% if tasks|length > 0 %}
 			<a id="add-link" href="{% url 'task-create' %}">&#x2b;</a>
 			{% endif %}
