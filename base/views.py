@@ -89,8 +89,17 @@ class TaskList(LoginRequiredMixin, ListView):
     context_object_name = 'tasks'
 
     def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user, archived=False)
+        queryset = self.model.objects.filter(user=self.request.user, archived=False)
 
+        sort_by = self.request.GET.get('sort_by')
+        if sort_by == 'priority':
+            queryset = queryset.order_by('priority')
+        elif sort_by == 'title':
+            queryset = queryset.order_by('title')
+        elif sort_by == 'due':
+            queryset = queryset.order_by('due')
+
+        return queryset
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = context['tasks'].filter(user=self.request.user)
