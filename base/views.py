@@ -92,9 +92,7 @@ class TaskList(LoginRequiredMixin, ListView):
         queryset = self.model.objects.filter(user=self.request.user, archived=False)
 
         sort_by = self.request.GET.get('sort_by')
-        if sort_by == 'priority':
-            queryset = queryset.order_by('priority')
-        elif sort_by == 'title':
+        if sort_by == 'title':
             queryset = queryset.order_by('title')
         elif sort_by == 'due':
             queryset = queryset.order_by('due')
