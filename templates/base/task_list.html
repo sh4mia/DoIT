@@ -22,6 +22,16 @@
 				><span class="material-symbols-outlined">logout</span></a
 			>
 		</div>
+		<div style="justify-content: space-between">
+			<form method="get">
+				<label for="sort_by">Sort by:</label>
+				<select name="sort_by" id="sort_by">
+					<option value="title">Title</option>
+					<option value="due">Due</option>
+				</select>
+				<button type="submit">Sort</button>
+			</form>
+		</div>
 		<div id="search-add-wrapper">
 			<form method="GET" style="display: flex">
 				<input
@@ -33,14 +43,6 @@
 				<button class="button1" type="submit">
 					<span class="material-symbols-outlined">search</span>
 				</button>
-			</form>
-			<form method="get">
-				<label for="sort_by">Sort by:</label>
-				<select name="sort_by" id="sort_by">
-					<option value="title">Title</option>
-					<option value="due">Due</option>
-				</select>
-				<button type="submit">Sort</button>
 			</form>
 			{% if tasks|length > 0 %}
 			<a id="add-link" href="{% url 'task-create' %}">&#x2b;</a>
