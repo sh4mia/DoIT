@@ -64,8 +64,11 @@ from django.utils import timezone
 
 def update_user_profile_points(user):
     user_profile = user.userprofile
-    last_completed_task = Task.objects.filter(user=user, complete=True).latest('created')
-    last_task_completed_at = last_completed_task.created if last_completed_task else None
+    try:
+        last_completed_task = Task.objects.filter(user=user, complete=True).latest('created')
+        last_task_completed_at = last_completed_task.created
+    except Task.DoesNotExist:
+        last_task_completed_at = None
 
     if last_task_completed_at:
         time_since_last_task = timezone.now() - last_task_completed_at
@@ -83,6 +86,7 @@ def update_user_profile_points(user):
         user_profile.streak = 1
 
     user_profile.save()
+
     
 class TaskList(LoginRequiredMixin, ListView):
     model = Task
