@@ -24,10 +24,17 @@
 		</div>
 		<div style="justify-content: space-between">
 			<form method="get">
-				<label for="sort_by">Sort by:</label>
+				<label for="sort_by">Sort:</label>
 				<select name="sort_by" id="sort_by">
 					<option value="title">Title</option>
 					<option value="due">Due</option>
+				</select>
+				<label for="priority">Filter:</label>
+				<select name="priority" id="priority">
+					<option value="">All</option>
+					<option value="low">Low</option>
+					<option value="medium">Medium</option>
+					<option value="high">High</option>
 				</select>
 				<input class="button" style="scale:80%;" type="submit" value="Submit">
 			</form>
