@@ -101,9 +101,9 @@ class TaskList(LoginRequiredMixin, ListView):
         elif sort_by == 'due':
             queryset = queryset.order_by('due')
 
-        priority = self.request.GET.get("priority")
-        if priority:
-            queryset = queryset.filter(priority=priority)
+        selected_priorities = self.request.GET.getlist('priority')
+        if selected_priorities:  
+            queryset = queryset.filter(priority__in=selected_priorities)
 
         return queryset
     def get_context_data(self, **kwargs):
