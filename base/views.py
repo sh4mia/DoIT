@@ -100,6 +100,8 @@ class TaskList(LoginRequiredMixin, ListView):
             queryset = queryset.order_by('title')
         elif sort_by == 'due':
             queryset = queryset.order_by('due')
+        elif sort_by == 'created':
+            queryset = queryset.order_by('created')
 
         selected_priorities = self.request.GET.getlist('priority')
         if selected_priorities:  
